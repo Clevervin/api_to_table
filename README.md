@@ -95,6 +95,13 @@ weather.fact_weather_hourly
 ```bash
 python src/run_pipeline.py
 
+## 📊 Power BI Dashboard
+
+Below is a snapshot of the Power BI dashboard built on top of the
+`weather.fact_weather_hourly` table.
+
+![Hourly Weather Insights — Calgary, Alberta](assets/Meteo_Dashboard.png)
+
 
 What I Learned
 
@@ -159,3 +166,5 @@ Perhaps the most important takeaway was that:
     systematic verification beats trial-and-error
 
 This project strengthened my confidence in diagnosing real-world data issues methodically.
+
+Note: Pipeline is designed to be run on demand or scheduled
