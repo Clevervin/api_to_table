@@ -1,25 +1,30 @@
-# ---------------------------
-# Python generated files
-# ---------------------------
+# ------------------------
+# Python
+# ------------------------
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
-# ---------------------------
+# ------------------------
 # Virtual environment
-# ---------------------------
+# ------------------------
 venv/
 
-# ---------------------------
-# Data files (regenerable)
-# ---------------------------
+# ------------------------
+# Local configuration
+# ------------------------
+config/config.yaml
+.env
+
+# ------------------------
+# Data (generated files)
+# ------------------------
 data/raw/
 data/processed/
+data/warehouse/
+*.db
 
-# ---------------------------
-# Secrets & local configs
-# ---------------------------
-.env
-config/*.local.*
-
-config/config.yaml
+# ------------------------
+# Notebooks (exploratory)
+# ------------------------
+notebooks/*.ipynb
