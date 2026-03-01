@@ -1,0 +1,23 @@
+# ---------------------------
+# Python generated files
+# ---------------------------
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# ---------------------------
+# Virtual environment
+# ---------------------------
+venv/
+
+# ---------------------------
+# Data files (regenerable)
+# ---------------------------
+data/raw/
+data/processed/
+
+# ---------------------------
+# Secrets & local configs
+# ---------------------------
+.env
+config/*.local.*
