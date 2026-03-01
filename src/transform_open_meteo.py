@@ -38,12 +38,37 @@ def hourly_to_dataframe(payload: Dict[str, Any]) -> pd.DataFrame:
     df = pd.DataFrame(hourly)
 
     # Parse timestamps
-    df["time"] = pd.to_datetime(df["time"])
+    df["time"] = pd.to_datetime(df["time"], errors="coerce")
 
-    # Optional metadata columns (useful later)
+    # -----------------------------
+    # Data Quality Checks (basic)
+    # -----------------------------
+    if df.empty:
+        raise ValueError("Transform produced 0 rows. Check API response and raw file.")
+
+    # Add metadata first so required_cols can include them
     df["latitude"] = payload.get("latitude")
     df["longitude"] = payload.get("longitude")
     df["timezone"] = payload.get("timezone")
+
+    required_cols = ["time", "latitude", "longitude"]
+    missing = [c for c in required_cols if c not in df.columns]
+    if missing:
+        raise ValueError(f"Missing required columns: {missing}")
+
+    if df["time"].isna().any():
+        raise ValueError("Column 'time' contains null values after conversion.")
+
+    # Duplicate timestamp check (time-series sanity)
+    dup_count = df.duplicated(subset=["time"]).sum()
+    if dup_count > 0:
+        raise ValueError(f"Found {dup_count} duplicate timestamps in 'time' column.")
+
+    # Ensure key measurement columns are numeric
+    numeric_cols = ["temperature_2m", "relative_humidity_2m", "precipitation", "wind_speed_10m"]
+    for col in numeric_cols:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="raise")
 
     # Optional: reorder so time is first
     cols = ["time"] + [c for c in df.columns if c != "time"]
