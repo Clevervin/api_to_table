@@ -1,0 +1,20 @@
+api:
+  base_url: "https://api.open-meteo.com/v1/forecast"
+
+location:
+  name: "CITY_NAME"
+  latitude: 00.0000
+  longitude: 00.0000
+  timezone: "Region/City"
+
+request:
+  hourly:
+    - temperature_2m
+    - relative_humidity_2m
+    - precipitation
+    - wind_speed_10m
+  forecast_days: 7
+
+output:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"

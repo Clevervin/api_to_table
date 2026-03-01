@@ -21,3 +21,5 @@ data/processed/
 # ---------------------------
 .env
 config/*.local.*
+
+config/config.yaml
