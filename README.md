@@ -94,3 +94,68 @@ weather.fact_weather_hourly
 ### One-command run
 ```bash
 python src/run_pipeline.py
+
+
+What I Learned
+
+This project reinforced several core data engineering and analytics concepts through hands-on implementation and debugging.
+
+1. Configuration vs. Secrets Management
+
+I learned the importance of clearly separating:
+    Application configuration (API endpoints, locations, file paths) stored in config.yaml
+    Sensitive credentials (database connection details) stored in a local .env file
+
+This separation prevents accidental credential leaks, improves portability across environments, and mirrors real-world production practices.
+
+2. Database vs. Schema (A Critical Distinction)
+
+One of the key lessons was understanding the difference between:
+    a database (e.g., open_meteo_dw)
+    a schema (e.g., weather)
+    a table (e.g., weather.fact_weather_hourly)
+
+Misconfiguring the database name initially caused data to load successfully but appear “missing” in pgAdmin. Debugging this reinforced the importance of verifying connection targets and not relying solely on success messages.
+
+3. Building an End-to-End, Re-runnable Pipeline
+
+By adding a single run_pipeline.py script, I learned how small orchestration improvements can:
+    simplify execution
+    reduce human error
+    make a pipeline feel production-ready
+
+Being able to run the full workflow with one command (python src/run_pipeline.py) is a meaningful step beyond ad-hoc scripting.
+
+4. Data Quality Is Not Optional
+Adding basic data quality checks in the transformation step helped me internalize that:
+    successful execution does not guarantee valid data
+    pipelines should fail fast when assumptions are violated
+    Simple checks (row counts, null timestamps, duplicates, numeric validation) significantly increase trust in downstream analytics.
+
+5. Choosing the Right Aggregations Matters
+
+While building the Power BI dashboard, I learned why:
+    precipitation should be summed (mm accumulates)
+    wind speed should be averaged (instantaneous measurement)
+    temperature is best represented as an average
+    sums of rates (e.g., wind speed) are misleading
+
+These decisions directly impact insight quality and demonstrate analytical judgment.
+
+6. Time-Series Visualization Techniques
+
+Visualizing precipitation by day and hour highlighted the value of:
+    splitting datetime fields into Date and Hour components
+    using heatmaps to represent two time dimensions simultaneously
+    labeling units clearly to avoid misinterpretation
+
+This improved both interpretability and visual clarity.
+
+7. Debugging Is a Core Skill
+
+Perhaps the most important takeaway was that:
+    most pipeline issues are configuration-related, not code-related
+    printing connection targets (e.g., engine URLs) is a powerful debugging technique
+    systematic verification beats trial-and-error
+
+This project strengthened my confidence in diagnosing real-world data issues methodically.
